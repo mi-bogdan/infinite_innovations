@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<h2 style="text-align: center; align-items: center; font-size: 30px; padding-bottom: 40px;">Доски пользователя *** <span style="color: rgb(233, 6, 6); font-weight: bold;">{{ user_board.username }}</span>***</h2>
+<div class="boards-container">
+
+    {% for board in board_all %}
+
+    <a href="{% url 'board_pins' board.id %}">
+        <div class="board-card">
+            <div class="board-thumbnail">
+                <img src="{% static 'media_/logo.png' %}" alt="Board">
+            </div>
+            <div class="board-details">
+                <h2 class="board-title">{{ board.title }}</h2>
+
+            </div>
+        </div>
+    </a>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="grid-container">
+
+        {% for pin in pin_all%}
+        <div class="grid-item">
+            <a href="{% url 'deteil' pin.id %}">
+                {% if pin.is_image %}
+                <img src="{{ pin.idea.url }}" alt="Описание изображения">
+                {% elif pin.is_video %}
+                <video src="{{ pin.idea.url }}" controls></video>
+                {% endif %}
+            </a>
+            <div class="grid-user">
+                <div class="grid-user-img"></div>
+                <a href="{% url 'list_board' pin.user.id %}" class="grid-user-name">{{ pin.user.username }}</a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+<div style="margin-top: 20px; align-items: center;text-align: center;" class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

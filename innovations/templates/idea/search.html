@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="grid-container">
+        {% if pins %}
+
+        {% for pin in pins %}
+        <div class="grid-item">
+            <a href="{% url 'deteil' pin.id %}">
+                {% if pin.is_image %}
+                <img src="{{ pin.idea.url }}" alt="Описание изображения">
+                {% elif pin.is_video %}
+                <video src="{{ pin.idea.url }}" controls></video>
+                {% endif %}
+            </a>
+            <div class="grid-user">
+                <div class="grid-user-img"></div>
+                <p class="grid-user-name">{{ pin.user.username }}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p style="font-weight: 900; font-size: 30px; align-items: center; text-align: center;">Ничего не найдено.</p>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

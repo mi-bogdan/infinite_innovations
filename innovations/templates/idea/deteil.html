@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+    <div class="container-deteil">
+        <div class="content-item">
+            <a href="{% url 'deteil' pin.id %}">
+                {% if pin.is_image %}
+                <img src="{{ pin.idea.url }}" alt="Описание изображения">
+                {% elif pin.is_video %}
+                <video src="{{ pin.idea.url }}" controls></video>
+                {% endif %}
+            </a>
+        </div>
+
+        <div class="content-deteil">
+            <div class="content-deteil-top">
+                <div class="grid-user">
+                    <div class="grid-user-img"></div>
+                    <a href="{% url 'list_board' pin.user.id %}" class="grid-user-name">{{ pin.user }}</a>
+                </div>
+                <p style="font-weight: 500;">Просмотренно : {{pin.views.count}}</p>
+                {% if is_board_pin %}
+                <a href="{% url 'delete_board_pin' pin.id %}">Удалить</a>
+                {% else %}
+                <a class="detail-save" href="#" id="saveLink">Сохранить</a>
+
+                {% endif%}
+
+
+
+                <!-- Модальное окно для сохранения -->
+                <div id="saveModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <form id="saveForm" method="post" action="{% url 'save_pin' pin.id %}">
+                            {% csrf_token %}
+                            <h2>Сохранить идею</h2>
+                            <label for="board">Выберите доску:</label>
+                            <select id="board" name="board">
+                                {% for bord in user_board %}
+                                <option value="{{ bord.pk }}" name="board">{{bord.title}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="submit" value="Сохранить">
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+            <p class="content-deteil-title">{{ pin.title }}</p>
+            <p class="content-deteil-descriptions">{{pin.description}}</p>
+
+            <p class="content-deteil-title-comments">Комментарии</p>
+            <div class="forma-review">
+
+
+
+                <div class="review">
+                    {% for comment in pin.get_reviews %}
+                    <div class="review-header">
+                        <p class="author">{{ comment.user.username }}</p>
+                        <p class="date">{{ comment.create_at }}</p>
+                    </div>
+
+                    <p class="comment">{{ comment.text }}</p>
+                    <a class="reply-button" href="#formComments"
+                        onclick="addComments('{{ comment.user.username }}','{{ comment.id }}')">Ответить</a>
+
+                    {% if comment.comments_set.exists %}
+                    <ul class="replies">
+                        {% for reply in comment.comments_set.all %}
+                        <li class="nested-review">
+                            <div class="review-header">
+                                <p class="author">{{ reply.user.username }}</p>
+                                <p class="date">{{ reply.create_at }}</p>
+                            </div>
+                            <p class="comment">{{ reply.text }}</p>
+
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="content-deteil-bottom">
+
+
+                <div class="content-bottom">
+                    <p class="content-bottom-title">Ваше мнение?</p>
+                    <div class="count-like">
+                        <p>{{likes_count}}</p>
+
+                        {% if is_like %}
+                        <a href="{% url 'like' pin.id %}"><img class="content-bottom-img"
+                                src="{% static 'media_/like.svg' %}" alt=""></a>
+                        {% else %}
+
+                        <a href="{% url 'like' pin.id %}"><img class="content-bottom-img"
+                                src="{% static 'media_/nelike.svg' %}" alt=""></a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <form action="{% url 'comments-add' pin.id %}" method="post" id="formComments"
+                    style="margin-top: 10px;">
+                    {% csrf_token %}
+                    <div class="forma-review-wrap">
+
+                        <input type="hidden" name="parents" id="contactparent" value="">
+
+                        <textarea type="text" placeholder="Напишите ваш комментарий здесь..." name="text"
+                            id="contactcomment" style="min-width: 250px; max-height: 25px;"></textarea>
+                        <button type="submit">Отправить</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <h2 class="deteil-new-title">Другие интересные пины</h2>
+
+
+    <div class="grid-container">
+
+        {% for item in idea %}
+        <div class="grid-item">
+            <a href="{% url 'deteil' item.id %}">
+                {% if item.is_image %}
+                <img src="{{ item.idea.url }}" alt="Описание изображения">
+                {% elif item.is_video %}
+                <video src="{{ item.idea.url }}" controls></video>
+                {% endif %}
+            </a>
+            <div class="grid-user">
+                <div class="grid-user-img"></div>
+                <a href="{% url 'list_board' item.user.id %}" class="grid-user-name">{{ item.user.username }}</a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<script>
+    function addComments(name, id) {
+        document.getElementById('contactparent').value = id;
+        document.getElementById('contactcomment').innerText = name + ', ';
+    }
+</script>
+
+{% endblock %}

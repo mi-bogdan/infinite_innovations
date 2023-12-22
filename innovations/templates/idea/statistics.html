@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="font-size: 40px; text-align: center; align-items: center; font-weight: 800;">
+    Гистограмма позволяет быстро и ясно оценить и сравнить количество элементов в различных темах.
+    вы можете видеть, какие темы наиболее популярны или наименее заинтересованы в вопросе.
+</h1>
+<img style="margin-bottom: 50px;" src="data:image/png;base64,{{ graph }}" alt="Гистограмма">
+
+
+
+<h1 style="margin-bottom: 50px; font-size: 40px; text-align: center; align-items: center; font-weight: 800;">
+    График
+    позволяет визуально анализировать, как меняется активность пользователей во времени. Это может помочь выявить
+    дни или периоды с повышенной или пониженной активностью</h1>
+<!-- Отображаем изображение графика -->
+{% if line_chart %}
+<img src="data:image/png;base64,{{ line_chart }}" alt="Линейный график">
+{% endif %}
+{% endblock %}

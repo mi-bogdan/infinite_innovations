@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<div class="idea-container">
+    <h2 class="idea-container__title">Добавить Идею</h2>
+    <form method="post" enctype="multipart/form-data" class="idea-form">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="idea-form__field">
+            {{ field.label_tag }}
+            {{ field|add_class:"idea-form__input idea-form__textarea idea-form__select" }}
+        </div>
+        {% endfor %}
+        <a class="detail-save" href="#" id="saveLink">Создать доску</a>
+
+
+        <button type="submit" class="idea-form__submit-btn">Сохранить</button>
+    </form>
+</div>
+<!-- Модальное окно для сохранения -->
+<div id="saveModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="saveForm" method="post" action="{% url 'board-add' %}">
+            {% csrf_token %}
+            <input type="text" name="title" class="form-title">
+            <textarea name="description" class="form-description" cols="30" rows="10"></textarea>
+    
+            <input type="submit" class="form-submit" value="Создать доску">
+        </form>
+    </div>
+</div>
+{% endblock %}

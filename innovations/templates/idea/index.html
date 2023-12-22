@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h2 class="slide-title">Найди свежие идеи для себя: <br><span class="slide-title-span">ПУТЕШЕСТВИЕ, IT, ЕДА и
+            ТД</span> </h2>
+    <div class="slider">
+        <div class="slider-content">
+            <div class="slide">
+                <img class="slide-img" src="{% static 'media_/slider1.jpg' %}" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="{% static 'media_/slider4.webp' %}" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="{% static 'media_/slider2.jpg' %}" alt="Slide 3">
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="{% static 'media_/slider3.jpg' %}" alt="Slide 3">
+            </div>
+            <div class="slide">
+                <img class="slide-img" src="{% static 'media_/slider5.jpg' %}" alt="Slide 3">
+            </div>
+        </div>
+        <a class="prev-button" href="#">Предыдущий</a>
+        <a class="next-button" href="#">Следующий</a>
+    </div>
+</div>
+
+{% endblock %}

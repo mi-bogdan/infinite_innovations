@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="container">
+
+    <h2 style="font-weight: bold; align-items: center; text-align: center; padding-bottom: 40px; font-size: 30px;">Доска  <span style="color: red;"> * {{ boards.title }} *</span> пользователя <span style="color: red;">{{ boards.user.username }}</span></h2>
+
+    <div class="grid-container">
+
+        {% for board in board_pins %}
+        <div class="grid-item">
+            <a href="{% url 'deteil' board.pin.id %}">
+                {% if board.pin.is_image %}
+                <img src="{{ board.pin.idea.url }}" alt="Описание изображения">
+                {% elif board.pin.is_video %}
+                <video src="{{ board.pin.idea.url }}" controls></video>
+                {% endif %}
+            </a>
+            <div class="grid-user">
+                <div class="grid-user-img"></div>
+                <a href="{% url 'list_board' board.pin.user.id %}" class="grid-user-name">{{ board.pin.user.username }}</a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
