@@ -1,1 +1,1 @@
-# infinite_innovations
+# infinite_config

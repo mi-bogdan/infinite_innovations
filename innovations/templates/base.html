@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <title>Document</title>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-line">
+            <div class="container">
+                <div class="container-flex">
+                    <div class="logo-div">
+                        <img class="logo-img" href="/" src="{% static 'media_/logo.png' %}" alt="">
+                        <p class="logo-p">Infinite Innovations</p>
+                    </div>
+                    <div><a class="prosmotr" href="{% url 'statistics' %}">Статистика</a></div>
+                    <div><a class="prosmotr" href="{% url 'list' %}">Просмотреть</a></div>
+
+
+                    <form class="search-container" method="get" action="{% url 'search' %}">
+                        <input type="text" class="search-input" placeholder="Введите запрос" name="q">
+                        <button class="search-button" type="submit">Поиск</button>
+                    </form>
+
+                    {% if user.is_authenticated %}
+                    <div style="padding-right: 100px;padding-left: 100px;"><a class="enter"
+                            href="{% url 'logout' %}">Выйти</a>
+                    </div>
+
+                    <a style="color: black; padding-right: 40px; font-size: 20px;"
+                        href="{% url 'list_board' user.id %}">{{user.username}}</a>
+
+                    <div style="text-align: center; align-items: center;"><a class="register"
+                            href="{% url 'add-pin' %}">Добавить идею</a></div>
+                    {% else %}
+                    <div style="padding-right: 100px;padding-left: 100px;"><a class="enter"
+                            href="{% url 'login' %}">Войти</a>
+                    </div>
+                    <div><a class="register" href="{% url 'register' %}">Регистрация</a></div>
+
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+    <footer class="footer">
+
+    </footer>
+
+
+</body>
+
+<script src="{% static 'js/scripts.js' %}"></script>
+
+</html>

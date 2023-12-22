@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="content-auth">
+        <div class="custom-container">
+            <form class="custom-login-form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <h2>Добро пожаловать в <br><span>Infinite Innovations</span></h2>
+                {% for errors in login_form.non_field_errors %}
+                <p style="color: red; padding-bottom: 10px;">{{ errors }}</p>
+                {% endfor %}
+                <div class="custom-input-group">
+                    <label for="username">Логин:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="custom-input-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="custom-btn-login">Войти</button>
+            </form>
+        </div>
+
+        <div class="image-container">
+            <img src="{% static 'media_/slide1.jpg' %}" alt="Image 1" class="image">
+            <img src="{% static 'media_/slide2.jpg' %}" alt="Image 2" class="image">
+            <img src="{% static 'media_/slide3.jpg' %}" alt="Image 3" class="image">
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
