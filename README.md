@@ -1,4 +1,4 @@
-<h2 align="center">infinite_config</h2>
+<h2 align="center">infinite_innovations</h2>
 
 **Ссылки**:
 - [VK](https://vk.com/id404101172)
